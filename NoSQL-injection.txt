@@ -7,6 +7,7 @@ Let's take a simple request (Mongodb+rails):
 
 	params[:username] = "admin" => OK
 	params[:username] = "admin/) || this.username.match(/.*" => NoSQL injection
+	params[:username] = "admin/) || '1'.match(/1"
 
 Ridiculous example but this is the idea.
 
