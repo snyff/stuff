@@ -1,0 +1,15 @@
+ 
+NoSQL injection
+
+Let's take a simple request (Mongodb+rails):
+
+	User.find(:all, '$where' => "this.username.match(/#{params[:username]}/)" )
+
+	params[:username] = "admin" => OK
+	params[:username] = "admin/) || this.username.match(/.*" => NoSQL injection
+
+Ridiculous example but this is the idea.
+
+Just post here for the record...
+
+
