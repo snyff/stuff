@@ -32,7 +32,11 @@ class PastebinScanner
     url = "http://pastebin.com/raw.php?i="+l
     puts "Fetching #{url}"
     uri = URI.parse(url)
-    response = Net::HTTP.get_response(uri)
+    begin  
+      response = Net::HTTP.get_response(uri)
+    rescue Timeout::Error =>e 
+      return
+    end
     File.open(l, "w").write response.body
     @reg.each do |r|
       puts "#{url} matches #{r.to_s} " if response.body =~ r
@@ -43,7 +47,11 @@ class PastebinScanner
   def get_links() 
     puts "Fetching #{@base}"
     uri = URI.parse(@base)
-    response = Net::HTTP.get_response(uri)
+    begin
+      response = Net::HTTP.get_response(uri)
+    rescue Timeout::Error =>e 
+      return
+    end
     response.body.scan(/<td class\=\"icon\"><a href\=\"\/(\w+)\">.*<\/a><\/td>/)
     
   end 
