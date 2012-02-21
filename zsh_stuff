@@ -1,0 +1,31 @@
+
+# cd -TAB
+setopt PUSHD_MINUS
+setopt AUTO_PUSHD
+DIRSTACKSIZE=9
+DIRSTACKFILE=~/.zdirs
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
+
+# vi magic
+foreground-vi() {
+  fg %vi
+}
+zle -N foreground-vi
+bindkey '^Z' foreground-vi
+
+# ssl cn
+cn () {
+  local PORT=443
+  if [[ ! -z $2 ]]; then
+    PORT=$2
+  fi
+  echo | openssl s_client -connect "$1":$PORT 2&>1 | grep subject | sed 's/.*CN=\(.*\)/\1 /';
+}
+
+
