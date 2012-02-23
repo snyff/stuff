@@ -1,13 +1,13 @@
 #! /usr/bin/ruby
 
-vo = ['a','e','i', 'o','u' ]
+exit unless ARGV.size == 1
+
+vo = ['a','e','i','o','u']
 last = ARGV[0]
-i = last.size
-while (!vo.include?(last[i]) and i > 0)
-  i-=1
-end
-while (vo.include?(last[i]) and i > 0) 
-  i-=1;
-end
+i = ARGV[0].size
+
+i-=1 while (!vo.include?(last[i]) and i > 0) 
+i-=1 while (vo.include?(last[i]) and i > 0) 
+
 puts last[0..i]+"en "+last
 
