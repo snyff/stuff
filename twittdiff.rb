@@ -16,7 +16,7 @@ while cursor != 0 do
   fl = Twitter.follower_ids(ARGV[0],{"cursor"=>cursor})
   cursor = fl.next_cursor
   followers += fl.ids
-  sleep(2) # DON"T BREAK DA TWITTER
+  sleep(2) # DON'T BREAK DA TWITTER
 end
 
 if File.exists?(File.join(TDHOME, ARGV[0]))
